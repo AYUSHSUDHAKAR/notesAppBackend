@@ -27,6 +27,6 @@ app.use("/api/notes", require("./routes/user"));
 const PORT = process.env.PORT || 3000;
 
 app.listen(
-  3000,
+  PORT,
   console.log(`Servre is running on port ${PORT}`.red.underline.bold)
 );
