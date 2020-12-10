@@ -22,7 +22,8 @@ dotenv.config({
 
 connectDB();
 
-app.use("/api/notes", require("./routes/user"));
+app.use("/api/notes/auth", require("./routes/user"));
+app.use("/api/notes", require("./routes/notes"));
 
 const PORT = process.env.PORT || 3000;
 
