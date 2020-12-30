@@ -8,6 +8,7 @@ const router = express.Router();
 router.post("/", auth, async (req, res, next) => {
   try {
     const notes = await Notes.create({
+      path: req.body.path,
       text: req.body.text,
       user: req.user.id,
     });
