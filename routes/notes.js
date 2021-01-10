@@ -28,4 +28,35 @@ router.post("/", auth, async (req, res, next) => {
   }
 });
 
+router.get("/search", async (request, response) => {
+  try {
+    let result = await Notes.aggregate([
+      {
+        $search: {
+          autocomplete: {
+            query: `${request.body.query}`,
+            path: "text",
+            fuzzy: {
+              maxEdits: 2,
+              prefixLength: 3,
+            },
+          },
+        },
+      },
+    ]);
+    response.send(result);
+  } catch (e) {
+    response.status(500).send({ message: e.message });
+  }
+});
+
+router.get("/get/:id", async (request, response) => {
+  try {
+    let result = await Notes.findOne({ _id: ObjectID(request.params.id) });
+    response.send(result);
+  } catch (e) {
+    response.status(500).send({ message: e.message });
+  }
+});
+
 module.exports = router;
