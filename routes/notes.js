@@ -57,7 +57,7 @@ router.get("/search", async (request, response) => {
       // { $match: { user: "5fec9284835ce80017ad05e9" } },
     ]);
     //response.send(result);
-    response.send({ msg: request.body.query });
+    response.send({ msg: request });
   } catch (e) {
     response.status(500).send({ message: e.message });
   }
