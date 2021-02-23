@@ -28,8 +28,10 @@ router.post("/", auth, async (req, res, next) => {
   }
 });
 
+//NOt on HEROKU
 router.get("/search", async (request, response) => {
   try {
+    // let notes = await Notes.find().populate("user");
     let result = await Notes.aggregate([
       {
         $search: {
@@ -43,6 +45,16 @@ router.get("/search", async (request, response) => {
           },
         },
       },
+      {
+        $lookup: {
+          from: "users",
+          localField: "user",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+      { $unwind: "$user" },
+      // { $match: { user: "5fec9284835ce80017ad05e9" } },
     ]);
     response.send(result);
   } catch (e) {
