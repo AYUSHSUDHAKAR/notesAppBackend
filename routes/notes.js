@@ -56,8 +56,8 @@ router.get("/search", async (request, response) => {
       // { $unwind: "$user" },
       // { $match: { user: "5fec9284835ce80017ad05e9" } },
     ]);
-    response.send(result);
-    response.send(request.body);
+    //response.send(result);
+    response.send({ msg: request.body });
   } catch (e) {
     response.status(500).send({ message: e.message });
   }
