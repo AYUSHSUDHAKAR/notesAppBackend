@@ -36,8 +36,8 @@ router.get("/search", async (request, response) => {
       {
         $search: {
           autocomplete: {
-            "query": `${request.body.query}`,
-            "path": "text",
+            query: `${request.body.query}`,
+            path: "text",
             fuzzy: {
               maxEdits: 2,
               prefixLength: 3,
@@ -57,6 +57,7 @@ router.get("/search", async (request, response) => {
       // { $match: { user: "5fec9284835ce80017ad05e9" } },
     ]);
     response.send(result);
+    response.send(request.body);
   } catch (e) {
     response.status(500).send({ message: e.message });
   }
