@@ -36,8 +36,8 @@ router.get("/search", async (request, response) => {
       {
         $search: {
           autocomplete: {
-            query: `${request.body.query}`,
-            path: "text",
+            "query": `${request.body.query}`,
+            "path": "text",
             fuzzy: {
               maxEdits: 2,
               prefixLength: 3,
@@ -45,18 +45,18 @@ router.get("/search", async (request, response) => {
           },
         },
       },
-      {
-        $lookup: {
-          from: "users",
-          localField: "user",
-          foreignField: "_id",
-          as: "user",
-        },
-      },
-      { $unwind: "$user" },
+      // {
+      //   $lookup: {
+      //     from: "users",
+      //     localField: "user",
+      //     foreignField: "_id",
+      //     as: "user",
+      //   },
+      // },
+      // { $unwind: "$user" },
       // { $match: { user: "5fec9284835ce80017ad05e9" } },
     ]);
-    response.json(result);
+    response.send(result);
   } catch (e) {
     response.status(500).send({ message: e.message });
   }
