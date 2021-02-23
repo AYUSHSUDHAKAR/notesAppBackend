@@ -30,6 +30,7 @@ router.post("/", auth, async (req, res, next) => {
 
 //NOt on HEROKU
 router.get("/search", async (request, response) => {
+  response.json({msg:request})
   try {
     // let notes = await Notes.find().populate("user");
     let result = await Notes.aggregate([
