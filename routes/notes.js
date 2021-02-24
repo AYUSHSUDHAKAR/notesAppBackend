@@ -30,38 +30,38 @@ router.post("/", auth, async (req, res, next) => {
 
 //NOt on HEROKU
 router.get("/search", async (request, response) => {
-  response.json({msg:request})
-  try {
-    // let notes = await Notes.find().populate("user");
-    let result = await Notes.aggregate([
-      {
-        $search: {
-          autocomplete: {
-            query: `${request.body.query}`,
-            path: "text",
-            fuzzy: {
-              maxEdits: 2,
-              prefixLength: 3,
-            },
-          },
-        },
-      },
-      // {
-      //   $lookup: {
-      //     from: "users",
-      //     localField: "user",
-      //     foreignField: "_id",
-      //     as: "user",
-      //   },
-      // },
-      // { $unwind: "$user" },
-      // { $match: { user: "5fec9284835ce80017ad05e9" } },
-    ]);
-    //response.send(result);
-    response.json({ msg: request });
-  } catch (e) {
-    response.status(500).send({ message: e.message });
-  }
+  return response.json( request );
+  // try {
+  // let notes = await Notes.find().populate("user");
+  // let result = await Notes.aggregate([
+  //   {
+  //     $search: {
+  //       autocomplete: {
+  //         query: `${request.body.query}`,
+  //         path: "text",
+  //         fuzzy: {
+  //           maxEdits: 2,
+  //           prefixLength: 3,
+  //         },
+  //       },
+  //     },
+  //   },
+  // {
+  //   $lookup: {
+  //     from: "users",
+  //     localField: "user",
+  //     foreignField: "_id",
+  //     as: "user",
+  //   },
+  // },
+  // { $unwind: "$user" },
+  // { $match: { user: "5fec9284835ce80017ad05e9" } },
+  // ]);
+  //response.send(result);
+  // response.json({ msg: request });
+  // } catch (e) {
+  //   response.status(500).send({ message: e.message });
+  // }
 });
 
 router.get("/get/:id", async (request, response) => {
