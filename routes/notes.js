@@ -1,4 +1,5 @@
 const express = require("express");
+var ObjectId = require("mongodb").ObjectID;
 const auth = require("../middleware/user_jwt");
 
 const Notes = require("../models/Notes");
@@ -29,8 +30,9 @@ router.post("/", auth, async (req, res, next) => {
 });
 
 //NOt on HEROKU
-router.get("/search", async (request, response) => {
-  return response.json( request );
+router.get("/search", (request, response) => {
+  //console.log("Search called");
+  response.send({ msg: request.body.text });
   // try {
   // let notes = await Notes.find().populate("user");
   // let result = await Notes.aggregate([
@@ -66,7 +68,7 @@ router.get("/search", async (request, response) => {
 
 router.get("/get/:id", async (request, response) => {
   try {
-    let result = await Notes.findOne({ _id: ObjectID(request.params.id) });
+    let result = await Notes.findOne({ _id: ObjectId(request.params.id) });
     response.send(result);
   } catch (e) {
     response.status(500).send({ message: e.message });
