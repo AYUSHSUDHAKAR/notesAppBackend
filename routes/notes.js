@@ -30,9 +30,37 @@ router.post("/", auth, async (req, res, next) => {
 });
 
 //NOt on HEROKU
-router.get("/search", (request, response) => {
+router.get("/search", async (request, response) => {
   //console.log("Search called");
-  response.send({ msg: request.body.text });
+  // response.send({ msg: request.body.text });
+  try {
+    let result = await Notes.aggregate([
+      {
+        $search: {
+          text: {
+            query: `${request.body.text}`,
+            path: "text",
+          },
+        },
+      },
+      {
+        $limit: 5,
+      },
+      {
+        $project: {
+          _id: 0,
+          path: 1,
+          text: 1,
+          user: 1,
+          // createdAt: 0,
+          // __v: 0,
+        },
+      },
+    ]);
+    response.status(200).send({ result });
+  } catch (e) {
+    response.status(500).send({ message: e.message });
+  }
   // try {
   // let notes = await Notes.find().populate("user");
   // let result = await Notes.aggregate([

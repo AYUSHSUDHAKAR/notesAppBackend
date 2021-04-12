@@ -4,7 +4,7 @@ const connectDB = async () => {
   const conn = await mongoose.connect(process.env.MONGO_URI, {
     auth: {
       user: "ayushsudhakar",
-      password: "@1998Ayu?!",
+      password: `${process.env.DB_PASS}`,
     },
     useNewUrlParser: true,
     useUnifiedTopology: true,
